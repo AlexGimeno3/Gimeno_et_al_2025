@@ -3,9 +3,9 @@ This directory contains all the files used to complete the analysis in the paper
 
 Each subdirectory contains a README file as necessary to explain the code and structure of the pipeline.
 
-# About analyze_files.py
 ***Please note: this repository is intended to allow for reviewers/other researchers to examine the methodology used in the paper _Association of quantitative EEG parameters extracted during infant cardiopulmonary bypass and two-year neurodevelopmental outcomes_. It has not been validated for clinical use. Please DO NOT use it for any medical purposes.***
 
+# About analyze_files.py
 This is the "master script" that, when run, will perform all the the analyses needed to duplicate the analysis performed in this paper. Note that it contains one setting to change in the "__main__" section at the bottom of the script: "postop" or "intraop". This setting directs the script to either access "processing_parameters_intraop.py" or "processing_parameters_postop.py" (in the ./utils subdirectory). **NB: to edit the analysis parameters, these processing_parameters files are the ones to alter.**
 
 # Dependencies
