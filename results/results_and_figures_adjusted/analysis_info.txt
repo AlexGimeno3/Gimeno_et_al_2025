@@ -1,0 +1,8 @@
+Analysis Information
+===================
+
+Machine filter: nicolet
+Intraoperative period: ecc
+Control variables: {'seizures_intraop': True, 'ga_eeg': False, 'pma_eeg': False}
+Used adjusted values for correlations: True
+Correlation results folder: correlation_results_adjusted

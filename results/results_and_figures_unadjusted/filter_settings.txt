@@ -1,0 +1,112 @@
+Analysis Filter Settings
+======================
+
+Date and time: 2025-06-13 17:50:09
+
+Basic Settings:
+  Machine filter: nicolet
+  Intraoperative period: ecc
+  Multi-condition analysis: False
+  Minimum valid data: 0.2
+
+Statistical Control Settings:
+  No control variables used
+
+Ignored FIS Numbers: None
+
+Selected Variables:
+  - absolute_spectral_power_a_d_ratio
+  - absolute_spectral_power_t_d_ratio
+  - absolute_spectral_power_alpha
+  - absolute_spectral_power_beta
+  - absolute_spectral_power_delta
+  - absolute_spectral_power_theta
+  - relative_spectral_power_alpha
+  - relative_spectral_power_beta
+  - relative_spectral_power_delta
+  - relative_spectral_power_theta
+  - edge_frequency
+  - raw_rEEG
+  - higuchi_fractal_dimension_alpha
+  - higuchi_fractal_dimension_beta
+  - higuchi_fractal_dimension_theta
+  - higuchi_fractal_dimension_delta
+  - higuchi_fractal_dimension_raw
+  - multiscale_entropy_auc
+  - multiscale_entropy_max_value
+  - multiscale_entropy_slope_coarse_values
+  - multiscale_entropy_slope_fine_values
+  - raw_rEEG_prop__0_10
+  - raw_rEEG_prop__10_25
+  - raw_rEEG_prop__25_50
+  - raw_rEEG_prop__50_100
+  - raw_rEEG_prop__over_100
+  - shannon_entropy_alpha
+  - shannon_entropy_beta
+  - shannon_entropy_delta
+  - shannon_entropy_theta
+  - spectral_difference_alpha
+  - spectral_difference_beta
+  - spectral_difference_delta
+  - spectral_difference_theta
+  - delta_band_rEEG
+  - delta_envelope_delta_env_mean
+  - delta_envelope_delta_env_STDEV
+  - delta_kurtosis
+  - delta_power_mean_power_delta
+  - delta_power_stdev_delta
+  - delta_rEEG_prop__0_10
+  - delta_rEEG_prop__10_25
+  - delta_rEEG_prop__25_50
+  - delta_rEEG_prop__50_100
+  - delta_rEEG_prop__over_100
+  - delta_skew
+  - theta_band_rEEG
+  - theta_envelope_theta_env_mean
+  - theta_envelope_theta_env_STDEV
+  - theta_kurtosis
+  - theta_power_mean_power_theta
+  - theta_power_stdev_theta
+  - theta_rEEG_prop__0_10
+  - theta_rEEG_prop__10_25
+  - theta_rEEG_prop__25_50
+  - theta_rEEG_prop__50_100
+  - theta_rEEG_prop__over_100
+  - theta_skew
+  - alpha_band_rEEG
+  - alpha_envelope_alpha_env_mean
+  - alpha_envelope_alpha_env_STDEV
+  - alpha_kurtosis
+  - alpha_power_mean_power_alpha
+  - alpha_power_stdev_alpha
+  - alpha_rEEG_prop__0_10
+  - alpha_rEEG_prop__10_25
+  - alpha_rEEG_prop__25_50
+  - alpha_rEEG_prop__50_100
+  - alpha_rEEG_prop__over_100
+  - alpha_skew
+  - beta_band_rEEG
+  - beta_envelope_beta_env_mean
+  - beta_envelope_beta_env_STDEV
+  - beta_kurtosis
+  - beta_power_mean_power_beta
+  - beta_power_stdev_beta
+  - beta_rEEG_prop__0_10
+  - beta_rEEG_prop__10_25
+  - beta_rEEG_prop__25_50
+  - beta_rEEG_prop__50_100
+  - beta_rEEG_prop__over_100
+  - beta_skew
+
+Selected Statistics:
+  - mean
+  - median
+  - stdev
+  - iqr
+  - theil_sen_slope
+  - theil_sen_rmse
+  - mann_kendall_tau
+
+Significance Thresholds:
+  Alpha (significance): 0.05
+  Trend threshold: 0.1
