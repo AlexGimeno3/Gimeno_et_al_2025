@@ -1,7 +1,7 @@
 """
-This is a variation of the alex_raw class that is built to contain everything the original one does, but without copying over everything from the MNE class (which I imagine is taking up a lot of space). It will also have other efficiency improvements.
+This is a variation of the alex_raw class that is built to contain everything the original one does, but without copying over everything from the MNE class (which takes up a lot of space).
 
-Of note: this class is built to take an alex_raw object that has already been stitched (essentially, this is a class that is built to work after the best hour has been determined).
+Of note: this class is built to take an alex_raw object that has already been stitched and cut down to the time frame of interest.
 """
 import os
 from datetime import datetime
@@ -14,18 +14,6 @@ import gc
 
 class alex_raw_efficient:
     def __init__(self, original_raw):
-        """
-        Initializes our class by taking an mne raw object (this way, we inherit all the mne_raw methods and attrbutes, and in theory we should still be able to use MNE documentation for the raw object). NB: EEGtimes_from_zero are reported as an array of milliseconds.
-        
-        Inputs:
-        - mne_raw (tuple): A raw MNE object (the one we will be analyzing and working with)
-        - viewTime1 (int): This is for visualization only. It is the time, IN SECONDS, that we want our viewing outputs to start
-        - viewTime2 (int): This is for visualization only. It is the time, IN SECONDS, that we want our viewing outputs to end
-        - which_channel (arr of str): This contains the channel of analysis we are interested in. If there are two channels here, we will create a bipolar signal of which_channel[0]-which_channel[1]
-        - filePath (str): the file from which we loaded the EDF file
-        - call_from (str): if the class is being instantiated from a certain function, this will be updated to reflect that specific function's needs. Only option is currently "postop_file_finder", which alters the channel choosing behavior to allow for easier automation.
-        """
-        
         #General info
         self.info = original_raw.info
         self.window_type = None

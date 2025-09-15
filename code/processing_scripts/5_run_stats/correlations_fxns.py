@@ -1,3 +1,7 @@
+"""
+Please note: while this functionality was retained, final correlational analyses were done in SPSS using partial correlations methods.
+"""
+
 from stat_tests import var_dict, stat_dict
 import numpy as np
 import textwrap

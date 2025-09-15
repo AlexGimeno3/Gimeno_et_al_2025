@@ -1,0 +1,3 @@
+The structure of this directory and its subdirectories is meant to demonstrate the organization of each EEG recording. Each folder (e.g. FIS100) represents a single .e file (i.e., a single EEG recording).
+
+Within each folder (e.g., in the ./FIS100 subdirectory), one would expect multiple .edf files, starting with the FIS number (e.g., FIS100.edf). If there were multiple .edf files generated, the first in the sequence would be FIS100.edf, followed by FIS100_1.edf, FIS100_2.edf, etc.

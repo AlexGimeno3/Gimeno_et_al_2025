@@ -1,20 +1,8 @@
 """
-EEG Artifact Rejection and Signal Quality Assessment Pipeline
+EEG Artifact Rejection Pipeline
 
-This module processes stitched EEG recordings to identify and remove various types of artifacts,
-ensuring signal quality meets minimum requirements for downstream analysis. The pipeline implements
-a multi-stage artifact detection system with configurable thresholds and quality controls.
+This module processes stitched EEG recordings to identify and remove various types of artifacts, ensuring signal quality meets minimum requirements for downstream analysis. The pipeline implements a multi-stage artifact detection system with configurable thresholds and quality controls.
 
-Purpose:
---------
-Takes stitched alex_raw_efficient objects and applies systematic artifact rejection to remove:
-1. Continuous zero runs (electrode disconnection)
-2. High-amplitude artifacts (movement, electrical interference)
-3. Continuous constant values
-4. Sudden amplitude jumps
-
-The module also enforces minimum signal quality requirements, rejecting recordings with
-insufficient clean data for reliable analysis.
 
 Artifact Detection Pipeline:
 ---------------------------
@@ -35,16 +23,7 @@ Quality Control System:
 Signal Processing:
 -----------------
 - Butterworth Filtering: Applied before artifact detection (0.1-40 Hz bandpass)
-- NaN Interpolation: Handles gaps in data using linear or PCHIP interpolation
-    - NB: this filtering an interpolation is done only so that artefact rejection is performed on these filtered signals; however, these filters/interpolations are NOT carried forward into future signal processing steps
-- Edge Handling: Special processing for NaN values at signal boundaries
-
-Data Structures:
----------------
-- alex_raw: Input EEG objects with voltage data and metadata
-- alex_raw_efficient: Memory-optimized output objects
-- rejected_tracker.xlsx: Comprehensive rejection logging with metrics
-- final_samples.xlsx: Registry of successfully processed files
+    - NB: this filtering is done only so that artefact rejection is performed on these filtered signals; however, these filters/interpolations are NOT carried forward into future signal processing steps.
 
 Configuration Dependencies:
 --------------------------
@@ -65,13 +44,6 @@ Output Files:
 - rejected_tracker.xlsx: Detailed rejection logs with quality metrics
 - final_samples.xlsx: Registry of processed files by time window
 - artefact_rejection_parameters.txt: Processing configuration record
-
-Error Handling:
---------------
-- File corruption: Graceful handling with detailed error logging
-- Signal quality failures: Comprehensive rejection tracking
-- Processing errors: Exception handling with traceback logging
-- Duplicate processing: Prevention through rejection tracker checks
 """
 
 import os
@@ -487,9 +459,6 @@ def art_per_channel(x, y, Fs):
     return x_nan, amount_removed
 
 def art_rej_alex_raw(save_base_dir, alex_raw_object, pkl_name):
-    """
-    Modified version of art_rej_alex_raw that includes proportion checks
-    """
     proportion_cutoff = vars_dict["proportion_cutoff"]
     time_cutoff = vars_dict["time_cutoff"]
     
@@ -671,14 +640,6 @@ def iterate_artefact_rejection(save_base_dir):
     
     Inputs:
     - save_base_dir (str): the directory where we would like the artefact-rejected .pkl files to be stored.
-    - proportion_cutoff (float): Maximum proportion of data allowed to be NaN
-    - time_cutoff (float): Minimum proportion of chunk that must contain real data
-    - clear (bool): Whether to clear existing files
-    - best_hour (bool): Whether to find the best hour of data
-    - my_base_dir (str): Custom base directory path (if needed)
-    - parallel (bool): Whether to process files in parallel
-    - num_processes (int): Number of parallel processes to use (default: CPU count - 1)
-    - best_hour_min (int): Minimum minutes required for best hour
     """
     proportion_cutoff = vars_dict["proportion_cutoff"]
     time_cutoff = vars_dict["time_cutoff"]

@@ -2,22 +2,14 @@
 EEG Variable Extraction and Time Series Analysis Pipeline
 ========================================================
 
-This module serves as the central orchestrator for extracting quantitative features
-from preprocessed EEG data across multiple frequency bands. It implements a sliding
-window approach to generate time series data and then applies statistical analysis to summarize these time series for each patient. Finally, it records/outputs these per-patient values for future analysis.
+This module serves as the central orchestrator for extracting quantitative features from preprocessed EEG data across multiple frequency bands. It implements a sliding window approach to generate time series data and then applies statistical analysis to summarize these time series for each patient. Finally, it records/outputs these per-patient values for future analysis.
 
-Purpose:
---------
-Transforms preprocessed EEG signals into quantitative variables suitable for
-statistical analysis and clinical interpretation. The pipeline extracts features
-from multiple frequency bands simultaneously and generates both summary statistics
-and time series data for longitudinal analysis.
 
 Core Architecture:
 -----------------
 1. Function Discovery: Dynamically loads analysis functions from frequency-specific modules
-2. Sliding Window Analysis: Applies functions to overlapping time windows
-3. Time Series Generation: Creates temporal sequences of extracted variables
+2. Sliding Window Analysis: Applies functions to user-specified time windows
+3. Time Series Generation: Creates and saves temporal sequences of extracted variables as .csv files
 4. Statistical Summarization: Computes summary statistics across time series
 5. Data Export: Saves results to Excel and CSV formats for further analysis
 
@@ -33,10 +25,10 @@ Function Organization:
 ---------------------
 Analysis functions are organized in frequency-specific modules:
 - fxns.py: Broadband analysis functions
-- fxns_delta.py: Delta-specific functions
-- fxns_theta.py: Theta-specific functions
-- fxns_alpha.py: Alpha-specific functions
-- fxns_beta.py: Beta-specific functions
+- fxns_delta.py: Delta-band specific functions
+- fxns_theta.py: Theta-band specific functions
+- fxns_alpha.py: Alpha-band specific functions
+- fxns_beta.py: Beta-band specific functions
 
 Each function must include metadata:
 - variable_name: Descriptive name for the extracted variable
@@ -68,7 +60,7 @@ Processing:
   2. Function loading → dynamic module import
   3. Sliding window analysis → time series generation
   4. Statistical summarization → summary variables
-  5. Time series export → CSV files for LMM
+  5. Time series export → CSV files for future processing
 Output: 
   - final_data.xlsx: Summary statistics per recording
   - time_series_data/: Individual time series (normalized time)
@@ -78,8 +70,6 @@ Quality Control:
 ---------------
 - Minimum run validation: Ensures sufficient data for temporal statistics
 - Error logging: Tracks failed extractions with detailed messages
-- Data validation: Verifies function outputs and statistical calculations
-- Memory management: Explicit cleanup of large objects
 
 Error Handling:
 --------------

@@ -6,23 +6,14 @@ This module provides a GUI-driven statistical analysis framework for comparing E
 
 Purpose:
 --------
-Transforms extracted EEG variables into statistical results. The module supports multi-group comparisons, covariate adjustment, correlation analysis, and generates standardized reports scientific publications.
-
-Core Architecture:
------------------
-1. Data Management: object loading and caching system
-2. Interactive Filtering: GUI-based selection of analysis parameters
-3. Statistical Testing: User selection of appropriate statistical tests
-4. Covariate Control: ANCOVA implementation for confounding variable adjustment if selected
-5. Results Generation: Automated PDF reports and Excel exports
-6. Quality Assurance: Comprehensive logging and validation
+Transforms extracted EEG variables into statistical results. The module supports multi-group comparisons, covariate adjustment, and correlation analysis.
 
 Key Features:
 ------------
 
 Statistical Methods:
 - Automatic normality testing with appropriate test selection
-- ANCOVA for controlling gestational age, seizure status, etc.
+- ANCOVA for controlling gestational age, seizure status, etc. when selected by user
 - Robust non-parametric alternatives (Mann-Whitney U)
 - Multiple comparison corrections
 - Effect size calculations
@@ -89,11 +80,6 @@ Supported Covariates:
 
 Statistical Model:
 EEG_parameter ~ ND_status + seizures_intraop + ga_eeg + pma_eeg
-Advantages over Traditional Methods:
-- Reduces Type I error from confounding
-- Increases statistical power through variance reduction
-- Provides adjusted group means for clinical interpretation
-- Enables analysis of covariate effects
 
 Quality Control Framework:
 -------------------------
@@ -125,12 +111,6 @@ Time Period Analysis:
 - Clamp: Aortic cross-clamp period
 - Custom: User-defined time windows
 
-Machine Validation:
-- Cross-platform reliability assessment
-- Technical artifact detection
-- Signal quality comparison
-- Harmonization validation
-
 Outcome Mapping:
 - Neurodevelopmental assessments
 - Seizure classifications
@@ -139,24 +119,6 @@ Outcome Mapping:
 
 Performance Characteristics:
 --------------------------
-
-Scalability:
-- Handles 100+ patient datasets efficiently
-- Memory usage: ~2GB for typical analysis
-- Processing time: 5-15 minutes for full analysis
-- Parallel processing capabilities
-
-Memory Management:
-- Intelligent object caching
-- Explicit memory cleanup
-- Large dataset streaming
-- Garbage collection optimization
-
-Error Handling:
-- Graceful failure recovery
-- Detailed error logging
-- User-friendly error messages
-- Analysis continuation strategies
 
 Output File Organization:
 ------------------------
@@ -187,35 +149,6 @@ Configuration Dependencies:
 - clear: Whether to rebuild cached objects
 - Statistical significance thresholds (customizable)
 - Quality control parameters
-
-Clinical Applications:
----------------------
-
-Regulatory Submissions:
-- FDA/EMA biomarker qualification packages
-- Standardized statistical reporting
-- Validation study protocols
-- Safety signal detection
-
-Research Publications:
-- Automated manuscript tables
-- Publication-ready figures
-- Effect size calculations
-- Multiple comparison corrections
-
-Clinical Decision Support:
-- Real-time biomarker analysis
-- Risk stratification tools
-- Treatment response monitoring
-- Outcome prediction models
-
-Future Extensions:
------------------
-- Machine learning integration
-- Longitudinal analysis capabilities
-- Multi-site harmonization tools
-- Real-time analysis dashboard
-
 """
 
 import sys

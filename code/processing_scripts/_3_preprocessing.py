@@ -1,15 +1,7 @@
 """
 EEG Signal Preprocessing and Frequency Band Filtering Pipeline
 
-This module applies signal preprocessing to artifact-rejected EEG data,
-generating multiple frequency-specific representations for spectral analysis. The pipeline
-implements clean-run segmentation to ensure filtering is only applied to continuous
-artifact-free data segments.
-
-Purpose:
---------
-Transforms artifact-rejected alex_raw_efficient objects into multiple filtered versions
-representing different EEG frequency bands.
+This module applies signal preprocessing to artifact-rejected EEG data, generating multiple frequency-specific representations for spectral analysis. The pipeline implements clean-run segmentation to ensure filtering is only applied to continuous artifact-free data segments.
 
 Core Processing Pipeline:
 ------------------------
@@ -49,7 +41,7 @@ Required variables from config.get_vars_dict():
 - min_seg_length: Minimum segment duration (seconds) for filtering
 - bandpass_order: Butterworth filter order
 - notch_frequency: Power line frequency (50 or 60 Hz)
-- notch_q: Quality factor for notch filter
+- notch_q: Q factor for notch filter
 - full_range: [low, high] frequencies for broadband
 - delta_range: [low, high] frequencies for delta band
 - theta_range: [low, high] frequencies for theta band  
@@ -73,13 +65,6 @@ Error Handling:
 - Checks that notch filtering actually modifies data
 - Handles edge cases in run detection
 - Graceful handling of completely artifact files
-
-Performance Considerations:
---------------------------
-- Memory management: Explicit deletion of processed objects
-- Segmented filtering: Only processes valid data regions
-- Deepcopy usage: Prevents cross-contamination between frequency bands
-- Reflection padding: Minimizes computational overhead vs. other padding methods
 """
 
 import numpy as np
@@ -127,7 +112,7 @@ def bandpass_filter_signal(my_raw, passband):
        - Order specified by bandpass_order configuration parameter
        - Normalized frequencies relative to Nyquist frequency
        
-    2. Padding Strategy (Mike X Cohen standard):
+    2. Padding Strategy (from Mike X Cohen Analyzing Neural Time Series Data):
        - Reflection padding: 3 cycles of lowest frequency
        - Formula: pad_time = 3 / low_frequency seconds
        - Minimizes edge artifacts while preserving signal characteristics
@@ -135,7 +120,6 @@ def bandpass_filter_signal(my_raw, passband):
     3. Segmented Processing:
        - Processes only clean_runs segments (continuous artifact-free data)
        - Preserves NaN regions to maintain temporal structure
-       - Independent filtering of each clean segment prevents cross-contamination
        
     4. Quality Control:
        - Validates output length matches input length

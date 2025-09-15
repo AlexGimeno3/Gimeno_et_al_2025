@@ -3,23 +3,9 @@ Alex Gimeno, 2025
 
 Nicolet EEG Data Stitching and Processing Pipeline
 
-This module processes EEG recordings exported from Nicolet machines, converting segmented .edf files
-into unified, analyzable datasets. The Nicolet machine exports .e files as multiple .edf segments
+This module processes EEG recordings exported from Nicolet machines. The Nicolet machine exports .e files as multiple .edf segments
 based on recording events (pauses, stops), and this pipeline reconstructs the continuous signal.
 
-Purpose:
---------
-Takes a FIS (patient) folder containing multiple .edf files and combines them into a single
-alex_raw_efficient object containing all voltage data in one continuous stream. The resulting
-object is saved to the final_stitched_cut_efficient directory for downstream analysis.
-
-Key Data Structures:
--------------------
-1. alex_raw: Base EEG data object containing voltage data, timestamps, and metadata
-2. alex_raw_efficient: Memory-optimized version of alex_raw for storage/transfer
-3. voltages_arr: List accumulating voltage data from all .edf segments
-4. times_arr: Numpy array of timestamps relative to recording start (seconds)
-5. pause_indices: List tracking where recording pauses occurred in the voltage stream
 
 Processing Workflow:
 -------------------
@@ -30,28 +16,6 @@ Processing Workflow:
 5. Generate timestamp arrays relative to recording start and surgery end
 6. Extract only data within specified time windows of interest
 7. Save as memory-efficient object for analysis pipeline
-
-Data Handling:
---------------
-- Pauses between recordings: Filled with zeros (flatline for artifact rejection)
-- Sampling rate: Preserved from original .edf files (typically downsampled)
-- Channel selection: Configurable via nicolet_channels in config
-- Time windows: Configurable analysis periods (e.g., 20-24 hours post-surgery)
-- Memory management: Aggressive cleanup of large arrays during processing
-
-Error Handling:
---------------
-- Corrupted .edf files: Logged and skipped
-- Missing timestamp data: Recorded in error logs
-- Window building failures: Graceful failure with error logging
-- File conversion errors: Comprehensive error tracking in Excel logs
-
-Dependencies:
-------------
-- alex_raw/alex_raw_efficient: Custom EEG data objects
-- file_importing: EDF file reading utilities
-- WindowBuildError: Custom exception for time window issues
-- config: Configuration management for paths and parameters
 
 Output Files:
 ------------

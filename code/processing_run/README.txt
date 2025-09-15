@@ -1,0 +1,1 @@
+These are directories where intermediate files are cached during analysis.

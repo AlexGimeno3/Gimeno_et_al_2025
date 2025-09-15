@@ -1,31 +1,8 @@
 """
 OBM (Olympic Brainz Monitor) EEG Data Processing Pipeline
 
-This module processes EEG recordings from OBM devices, stitching together multiple .edf files
-that are exported in EDF+C format using EDFbrowser. Unlike Nicolet recordings, OBM files use
-a different naming convention and pause detection methodology based on measurement timestamps.
+This module processes EEG recordings from OBM devices, stitching together multiple .edf files that are exported in EDF+C format using EDFbrowser. Unlike Nicolet recordings, OBM files use a different naming convention and pause detection methodology based on measurement timestamps.
 
-Purpose:
---------
-Processes OBM EEG recordings by combining segmented .edf files into unified alex_raw_efficient
-objects for analysis. OBM recordings are pre-processed through EDFbrowser to create EDF+C format
-files with standardized naming (XXX_YYYY.edf format where YYYY is a 4-digit sequence number).
-
-Key Differences from Nicolet Pipeline:
--------------------------------------
-1. File Structure: Uses channel-specific subdirectories (CrossEeg, LeftEeg, RightEeg)
-2. Naming Convention: Files follow XXX_YYYY.edf pattern instead of simple numeric suffixes
-3. Pause Detection: Uses measurement timestamps (meas_date) rather than annotation parsing
-4. Channel Selection: Single channel processing per run (CrossEeg/LeftEeg/RightEeg)
-
-Data Structures:
----------------
-1. alex_raw: Core EEG data object with voltage arrays and metadata
-2. alex_raw_efficient: Memory-optimized version for storage
-3. voltages_arr: Accumulated voltage data from all segments
-4. meas_start_datetime_arr: Array of measurement start times for pause calculation
-5. meas_end_datetime_arr: Array of measurement end times for gap detection
-6. pause_indices: Indices where recording pauses occurred
 
 Processing Workflow:
 -------------------
@@ -37,14 +14,6 @@ Processing Workflow:
 6. Concatenate voltage data into continuous stream
 7. Build timestamp arrays and extract analysis windows
 8. Save as alex_raw_efficient object
-
-Pause Detection Logic:
----------------------
-Unlike Nicolet (which parses annotations), OBM uses measurement timestamps:
-- meas_start_datetime: Start time from EDF header (raw_EDF.info["meas_date"])
-- meas_end_datetime: Calculated as start + signal_length
-- pause_length: Time gap between end of previous file and start of current file
-- Zero-padding: Gaps filled with zeros for artifact rejection pipeline
 
 File Structure Expected:
 -----------------------
@@ -66,13 +35,6 @@ Configuration Dependencies:
 - OBM_recording_time_data_path: Excel metadata file path
 - windows: Analysis time windows (e.g., [[20,24]] for 20-24h post-surgery)
 - downsample_rate: EEG downsampling factor
-
-Error Handling:
---------------
-- Missing channel directories: Logged and skipped
-- Corrupted .edf files: Comprehensive error tracking
-- Invalid measurement timestamps: DateTime validation and error logging
-- Missing surgery times: Graceful failure with error recording
 
 Output Files:
 ------------
@@ -263,36 +225,6 @@ def stitch_EDF_and_cut(e_file_directory, save_dir_base):
     final_file_name = str(os.path.basename(os.path.normpath(e_file_directory))) #This DOES NOT include .edf; e.g., will be FIS155b
     
     def custom_sort(file_list):
-        """
-        Sort OBM .edf files by 4-digit numeric suffix in XXX_YYYY.edf format.
-        
-        OBM files from EDFbrowser follow XXX_YYYY.edf naming where YYYY is a
-        4-digit sequence number (e.g., recording_0001.edf, recording_0002.edf).
-        Only files matching this pattern are included in processing.
-        
-        Parameters:
-        -----------
-        file_list : list of str
-            List of .edf filenames from OBM directory
-            
-        Returns:
-        --------
-        list of str
-            Filtered and sorted filenames in chronological order
-            Only includes files with _YYYY.edf pattern
-            
-        Sorting Logic:
-        -------------
-        1. Filter: Only keep files matching _YYYY.edf pattern
-        2. Extract: 4-digit YYYY suffix as integer
-        3. Sort: By numeric value of YYYY suffix
-        
-        Example:
-        --------
-        Input: ['recording_0001.edf', 'recording_0010.edf', 'recording_0002.edf', 'other.edf']
-        Output: ['recording_0001.edf', 'recording_0002.edf', 'recording_0010.edf']
-        Note: 'other.edf' excluded (doesn't match pattern)
-        """
         def sort_key(filename):
             # Extract the numeric suffix after the underscore
             match = re.search(r'_(\d{4})\.edf$', filename)
